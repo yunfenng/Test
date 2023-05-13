@@ -1,0 +1,4 @@
+name	sex	age	email	
+风清扬	男	80	johndoe@example.com	
+令狐冲	男	25	janesmith@example.com	
+东方不败	男	35	bobjohnson@example.com
