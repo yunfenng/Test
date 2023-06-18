@@ -15,7 +15,7 @@ import java.util.List;
 
 public class FileGenerator {
 
-    public static List<File> generateTxtFile(List<Person> objects) throws IOException, IllegalAccessException {
+    public static List<File> generateTxtFile(List<Person1> objects) throws IOException, IllegalAccessException {
         List<File> fileList = new ArrayList<>();
 
         int batchSize = 9999; // 每个文件的行数限制
@@ -67,22 +67,27 @@ public class FileGenerator {
             /*for (String header : headers) {
                 writer.write(header + "\t");
             }*/
-            for (Field field : fields) {
+            /*for (Field field : fields) {
                 writer.write(field.getName());
                 writer.write("\t");
             }
-            writer.write("\n");
+            writer.write("\n");*/
 
             // 写入数据
             for (int j = startIndex; j < endIndex; j++) {
                 Object object = objects.get(j);
-
-                for (Field field : fields) {
+                for (int k = 0; k < fields.length; k++) {
+                    Field field = fields[k];
                     field.setAccessible(true);
                     Object value = field.get(object);
                     writer.write(String.valueOf(value));
-                    writer.write("\t"); // 使用制表符分隔数据
+                    if (k < fields.length - 1) {
+                        writer.write("|"); // 使用制表符分隔数据
+                    }
                 }
+              /*  for (Field field : fields) {
+
+                }*/
                 writer.write("\n");
             }
             fileList.add(file);
@@ -94,11 +99,11 @@ public class FileGenerator {
 
     public static void main(String[] args) {
         // 示例用法
-        List<Person> objects = new ArrayList<>(); // 替换为实际对象列表
+        List<Person1> objects = new ArrayList<>(); // 替换为实际对象列表
         for (int i = 1; i < 300; i++) {
-            objects.add(new Person("风清扬" + i, "男", 80, "fengqingyang@huashan.com"));
-            objects.add(new Person("令狐冲" + i, "男", 25, "linghuchong@huashan.com"));
-            objects.add(new Person("东方伯" + i, "男", 40, "dongfang@heimuya.com"));
+            objects.add(new Person1("风清扬" + i, "男", 80, "fengqingyang@huashan.com"));
+            objects.add(new Person1("令狐冲" + i, "男", 25, "linghuchong@huashan.com"));
+            objects.add(new Person1("东方伯" + i, "男", 40, "dongfang@heimuya.com"));
         }
         try {
             List<File> fileList = generateTxtFile(objects);
